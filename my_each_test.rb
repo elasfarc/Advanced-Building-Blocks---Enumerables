@@ -1,13 +1,16 @@
-def my_each(array)
+module Enumerable
+def my_each()
+    
   # build a loop around the given array
-  n = array.length
+  n = self.length
   i = 0
   while i < n
-    yield array[i] # [1, 2, 3]
+    yield self[i] # [1, 2, 3]
     i += 1
   end
 
-  array
+  self
+end
 end
 
 # array_x = my_each([1, 2, 3]) do |num|
@@ -19,3 +22,8 @@ end
 [1, 2, 3].my_each() do |num|
     pp "number is #{num}"
   end
+
+  a = { "one" => 1, "two" => 2 }
+  a.my_each() do |key, value|
+      pp "#{key} is #{value}"
+    end

@@ -1,4 +1,4 @@
-module Enumerable
+
     def my_each_index()
         # build a loop around the given array
         n = self.length
@@ -10,7 +10,7 @@ module Enumerable
       
         self
     end
-end
+
 
 
 a = [1,5,8,4,9]
