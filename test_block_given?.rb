@@ -7,11 +7,21 @@
 # [].all?                                           #=> true
 
 module Enumerable
-    def my_all?()
+    def my_all?(optional_parameter = nil)
        converted_array = self.to_a
        n = converted_array.length
        i = 0 
- 
+
+       # first step to deal with the given argument and ignore the bloczk if was given
+        unless optional_parameter == nil
+            puts " warning: given block not used " if block_given?
+           dummy_flag = converted_array.my_all? {|element| element.is_a?(optional_parameter) }
+           return false if dummy_flag == false
+           return true 
+        end
+
+
+        #2nd step dealing with the case when no argument and no block 
        if block_given? == false 
         dummy_flag = converted_array.my_all? {|obj| !!obj == false }
         return false if dummy_flag == false 
@@ -19,6 +29,7 @@ module Enumerable
         #return "no-block && converted-Array is #{converted_array}"
        end
 
+        #3rd step dealing with normal case -> no argument and a block is given 
        while (i < n)
 
          returned_flag = yield converted_array[i]
@@ -36,17 +47,16 @@ module Enumerable
  
  
  
- #value = %w[anfkl ant bear cat].my_all? { |word| word.length >= 3 } #=> true
+ value = %w[anfkl ant bear cat].my_all?() { |word| word.length >= 3 } #=> true
  
- #value2 = (1..100).my_all? {|n| n.even?}
+ value2 = (1..100).my_all? {|n| n.even?}
  
- #value3 = [1, 2i, 3.14].my_all?(Numeric)  
+ value3 = [1, 2i, 3.14].my_all?(Numeric){|n| n.even?}
  
  
- #pp value3
  
- #a = { "one" => 1, "two" => 2 }
-  #value4 =a.my_all? {|k, v| k == v}
+ a = { "one" => 1, "two" => 2 }
+ value4 =a.my_all? {|k, v| k == v}
  
   #pp value4
 
@@ -54,7 +64,16 @@ module Enumerable
   #valueg = [nil, true, 99].my_all?  
 
   #pp valueg
- 
- c = [].my_all?
 
- pp c
+  #hghgh = 0
+
+ #c = [].my_all?(hghgh)
+
+ #pp c
+
+
+
+ #pp value
+ #pp value2
+ pp value3
+ #pp value4

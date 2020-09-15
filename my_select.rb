@@ -10,7 +10,7 @@ module Enumerable
            end
             i += 1
         end
-       pp returned_array
+        returned_array
     end  
 end
 

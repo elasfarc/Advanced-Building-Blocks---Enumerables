@@ -1,4 +1,4 @@
-# my_each, for array, hash and range 
+# my_each, for array, hash and range (my_each & my_each_index)
 module Enumerable
     def my_each()
       
