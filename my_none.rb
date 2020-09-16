@@ -16,8 +16,8 @@ module Enumerable
         #2nd step dealing with the case when no argument and no block 
        if block_given? == false 
         dummy_flag = converted_array.my_none? {|obj| !obj == false }
-        return false if dummy_flag == false 
-        return true
+        return true if dummy_flag == false 
+        return false
         #return "no-block && converted-Array is #{converted_array}"
        end
 

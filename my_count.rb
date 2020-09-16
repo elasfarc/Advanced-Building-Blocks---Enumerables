@@ -69,12 +69,8 @@ module Enumerable
     end
  end
 
-                              #condition_met_counter += 1
- ary = [1, 2, 4, 2, 2]
- #ary.my_count
- #pp ary.my_count{ |x| x } 
 
-  #pp ary.count(2)            #=> 2
-
-
-  pp ary.my_count(2)
+ ary = [1, 2, 4, 2]
+pp ary.count               #=> 4
+pp ary.count(2)            #=> 2
+pp ary.count{ |x| x%2==0 } #=> 3

@@ -8,7 +8,7 @@ module Enumerable
        # first step to deal with the given argument and ignore the bloczk if was given
         unless optional_parameter == nil
             puts " warning: given block not used " if block_given?
-           dummy_flag = converted_array.my_any? {|element| element.is_a?(optional_parameter) }
+           dummy_flag = converted_array.my_any? {|element| element.is_a? (optional_parameter) }
            return false if dummy_flag == false
            return true 
         end
@@ -38,9 +38,9 @@ module Enumerable
 end
 
  
-# pp %w[ant bear cat].my_any? { |word| word.length >= 3 } #=> true
-# pp %w[ant bear cat].my_any? { |word| word.length >= 4 } #=> true
+pp %w[ant bear cat].my_any? { |word| word.length >= 3 } #=> true
+pp %w[ant bear cat].my_any? { |word| word.length >= 4 } #=> true
 # pp %w[ant bear cat].my_any?(/d/)                        #=> false
-# pp [nil, true, 99].my_any?(Integer)                     #=> true
-# pp [nil, true, 99].my_any?                              #=> true
-# pp [].my_any?                                            #=> false
+pp [nil, true, 99].my_any?(Integer)                     #=> true
+pp [nil, true, 99].my_any?                              #=> true
+pp [].my_any?                                            #=> false
