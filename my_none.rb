@@ -15,10 +15,12 @@ module Enumerable
 
         #2nd step dealing with the case when no argument and no block 
        if block_given? == false 
-        dummy_flag = converted_array.my_none? {|obj| !obj == false }
-        return false if dummy_flag == false 
-        return true
-        #return "no-block && converted-Array is #{converted_array}"
+
+         for i in converted_array
+            return false  if !!i == true
+         end
+         return true 
+
        end
 
         #3rd step dealing with normal case -> no argument and a block is given 
@@ -36,10 +38,10 @@ module Enumerable
     end
  end
 
-  pp %w{ant bear cat}.my_none? { |word| word.length == 5 } #=> true
-  pp %w{ant bear cat}.my_none? { |word| word.length >= 4 } #=> false
+  #pp %w{ant bear cat}.my_none? { |word| word.length == 5 } #=> true
+  #pp %w{ant bear cat}.my_none? { |word| word.length >= 4 } #=> false
  # pp %w{ant bear cat}.my_none?(/d/)                        #=> true
-  pp [1, 3.14, 42].my_none?(Float)                         #=> false
+  #pp [1, 3.14, 42].my_none?(Float)                         #=> false
   pp [].my_none?                                           #=> true
   pp [nil].my_none?                                        #=> true
   pp [nil, false].my_none?                                 #=> true
