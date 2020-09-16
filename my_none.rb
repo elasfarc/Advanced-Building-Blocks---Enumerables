@@ -1,6 +1,5 @@
-#require ("TypeError")
 module Enumerable
-    def my_any?(optional_parameter = nil)
+    def my_none?(optional_parameter = nil)
        converted_array = self.to_a
        n = converted_array.length
        i = 0 
@@ -8,7 +7,7 @@ module Enumerable
        # first step to deal with the given argument and ignore the bloczk if was given
         unless optional_parameter == nil
             puts " warning: given block not used " if block_given?
-           dummy_flag = converted_array.my_any? {|element| element.is_a?(optional_parameter) }
+           dummy_flag = converted_array.my_none? {|element| element.is_a?(optional_parameter) }
            return false if dummy_flag == false
            return true 
         end
@@ -16,7 +15,7 @@ module Enumerable
 
         #2nd step dealing with the case when no argument and no block 
        if block_given? == false 
-        dummy_flag = converted_array.my_any? {|obj| !!obj == false }
+        dummy_flag = converted_array.my_none? {|obj| !obj == false }
         return false if dummy_flag == false 
         return true
         #return "no-block && converted-Array is #{converted_array}"
@@ -28,19 +27,20 @@ module Enumerable
          returned_flag = yield converted_array[i]
 
           if (returned_flag)   # if (returned_flag == false )
-             return true
+             return false
           end
           i +=1
  
        end
-        false
+       true
     end
-end
+ end
 
- 
-# pp %w[ant bear cat].my_any? { |word| word.length >= 3 } #=> true
-# pp %w[ant bear cat].my_any? { |word| word.length >= 4 } #=> true
-# pp %w[ant bear cat].my_any?(/d/)                        #=> false
-# pp [nil, true, 99].my_any?(Integer)                     #=> true
-# pp [nil, true, 99].my_any?                              #=> true
-# pp [].my_any?                                            #=> false
+  pp %w{ant bear cat}.my_none? { |word| word.length == 5 } #=> true
+  pp %w{ant bear cat}.my_none? { |word| word.length >= 4 } #=> false
+ # pp %w{ant bear cat}.my_none?(/d/)                        #=> true
+  pp [1, 3.14, 42].my_none?(Float)                         #=> false
+  pp [].my_none?                                           #=> true
+  pp [nil].my_none?                                        #=> true
+  pp [nil, false].my_none?                                 #=> true
+  pp [nil, false, true].my_none?                           #=> false
