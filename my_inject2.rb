@@ -85,6 +85,10 @@ module Enumerable
 
 
     end
+
+
+
+    
 end
 
 
@@ -111,5 +115,21 @@ end
 
 ##pp (5..10).my_inject(:%) 
 
-pp (5..10).my_inject(:*) { |sum, n| sum + n }  
+#pp (5..10).my_inject(:*) { |sum, n| sum + n }  
 
+
+
+
+
+
+    #multiply_els([2,4,5]) #=> 40
+    #(5..10).my_inject(:*) { |sum, n| sum + n } <------> [2,4,5].my_inject(){|sum, n| sum * n} 
+    def multiply_els(arr)
+        arr = arr.to_a
+        memo = 0
+         memo = arr.my_inject() {|sum, n| sum * n} 
+         return memo
+    end
+
+
+   pp multiply_els([2,4,5]) #=> 40

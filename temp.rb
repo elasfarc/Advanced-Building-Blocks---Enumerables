@@ -5,4 +5,18 @@ def foo(*arg)
 end
 
 
-foo(12, 5)
+#foo(12, 5)
+
+
+
+def call_proc
+   puts "Before proc"
+   my_proc = Proc.new { return 2 }
+   my_proc.call
+   puts "After proc"
+ end
+x = 0
+x =  call_proc
+
+pp"//////////"
+pp x
