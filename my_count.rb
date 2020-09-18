@@ -28,12 +28,15 @@ module Enumerable
 
 
         # ary = [1, 2, 4, 2]
-        # ary.count(2)            #=> 2
+        # ary.count(2)            #=> 2   
 
         if optional_parameter 
             for i in converted_array 
                
-                condition_met_counter +=1   if i == optional_parameter
+               if i == optional_parameter
+               
+                condition_met_counter +=1
+               end
                 
             end
                
@@ -42,17 +45,9 @@ module Enumerable
        
 
         #2nd step dealing with the case when no argument and no block 
-       if block_given? == false 
-        for i in converted_array 
-        #dummy_flag = converted_array.my_count {|obj| obj }
-        if i
-        condition_met_counter +=1  
-        end
-    end
-       
-        return condition_met_counter
+        return n unless block_given?
         #return "no-block && converted-Array is #{converted_array}"
-       end
+       
 
         #3rd step dealing with normal case -> no argument and a block is given 
        while (i < n)
@@ -71,6 +66,6 @@ module Enumerable
 
 
  ary = [1, 2, 4, 2]
-pp ary.count               #=> 4
-pp ary.count(2)            #=> 2
-pp ary.count{ |x| x%2==0 } #=> 3
+# ary.my_count               #=> 4
+#pp ary.my_count(2)            #=> 2
+pp ary.my_count{ |x| x%2==0 } #=> 3
