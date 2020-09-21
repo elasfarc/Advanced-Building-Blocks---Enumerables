@@ -1,3 +1,9 @@
+# rubocop:disable Metrics/MethodLength
+# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/PerceivedComplexity
+# rubocop:disable Metrics/ShadowingOuterLocalVariable
+# rubocop:disable Metrics/DoubleNegation
+# rubocop:disable Metrics/ModuleLength
 module Enumerable
   def my_each()
     converted_array = to_a
@@ -203,7 +209,12 @@ end
 
 def multiply_els(arr)
   arr = arr.to_a
-  memo = 0
   memo = arr.my_inject { |sum, n| sum * n }
   memo
 end
+# rubocop:enable Metrics/ModuleLength
+# rubocop:enable Metrics/MethodLength
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/PerceivedComplexity
+# rubocop:enable Metrics/ShadowingOuterLocalVariable
+# rubocop:enable Metrics/DoubleNegation
