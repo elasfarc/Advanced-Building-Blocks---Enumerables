@@ -32,6 +32,7 @@ module Enumerable
     converted_array = to_a
     i = 0
     returned_array = []
+    return to_enum unless block_given?
     while i < converted_array.length
       conditional_met = yield converted_array[i]
       returned_array.push(converted_array[i]) if conditional_met == true
