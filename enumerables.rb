@@ -33,6 +33,7 @@ module Enumerable
     i = 0
     returned_array = []
     return to_enum unless block_given?
+
     while i < converted_array.length
       conditional_met = yield converted_array[i]
       returned_array.push(converted_array[i]) if conditional_met == true
@@ -45,15 +46,21 @@ module Enumerable
     converted_array = to_a
     n = converted_array.length
     i = 0
-    unless optional_parameter.nil?
+    if optional_parameter
       puts ' warning: given block not used ' if block_given?
-      dummy_flag = converted_array.my_all? { |element| element == optional_parameter }
+
+      dummy_flag = if optional_parameter.is_a?(Regexp)
+                     converted_array.my_all? { |element| !!element[optional_parameter] }
+                   else
+                     converted_array.my_all? { |element| element.is_a?(optional_parameter) }
+                   end
+
       return false if dummy_flag == false
 
       return true
     end
     if block_given? == false
-      dummy_flag = converted_array.my_all? { |obj| !!obj == false }
+      dummy_flag = converted_array.my_all? { |obj| obj }
       return false if dummy_flag == false
 
       return true
@@ -71,9 +78,14 @@ module Enumerable
     converted_array = to_a
     n = converted_array.length
     i = 0
-    unless optional_parameter.nil?
+    if optional_parameter
       puts ' warning: given block not used ' if block_given?
-      dummy_flag = converted_array.my_any? { |element| element == optional_parameter }
+
+      dummy_flag = if optional_parameter.is_a?(Regexp)
+                     converted_array.my_any? { |element| !!element[optional_parameter] }
+                   else
+                     converted_array.my_any? { |element| element.is_a?(optional_parameter) }
+                   end
       return false if dummy_flag == false
 
       return true
@@ -97,9 +109,13 @@ module Enumerable
     converted_array = to_a
     n = converted_array.length
     i = 0
-    unless optional_parameter.nil?
+    if optional_parameter
       puts ' warning: given block not used ' if block_given?
-      dummy_flag = converted_array.my_none? { |element| element == optional_parameter }
+      dummy_flag = if optional_parameter.is_a?(Regexp)
+                     converted_array.my_none? { |element| !!element[optional_parameter] }
+                   else
+                     converted_array.my_none? { |element| element.is_a?(optional_parameter) }
+                   end
       return false if dummy_flag == false
 
       return true
@@ -185,7 +201,7 @@ module Enumerable
       return memo
     end
     if !!argu[0]
-      unless argu[0].class == Numeric
+      unless argu[0].is_a?(Numeric)
         return 'Block is given && only one argument is provided ----> argu[0] must be a numeric value'
       end
 
@@ -209,3 +225,4 @@ def multiply_els(arr)
   memo
 end
 
+%w[dog cat].my_all?(/d/) { |n| n }
