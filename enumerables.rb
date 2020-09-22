@@ -33,6 +33,7 @@ module Enumerable
     i = 0
     returned_array = []
     return to_enum unless block_given?
+
     while i < converted_array.length
       conditional_met = yield converted_array[i]
       returned_array.push(converted_array[i]) if conditional_met == true
@@ -55,7 +56,6 @@ module Enumerable
     if block_given? == false
       dummy_flag = converted_array.my_all? { |obj| !!obj == false }
       return false if dummy_flag == false
-
       return true
     end
     while i < n
@@ -209,3 +209,6 @@ def multiply_els(arr)
   memo
 end
 
+
+pp (1..3).inject(4) { |prod, n| prod * n } 
+pp (1..3).my_inject(4) { |prod, n| prod * n }
