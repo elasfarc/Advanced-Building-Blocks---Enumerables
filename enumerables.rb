@@ -4,6 +4,7 @@
 # rubocop:disable Metrics/ShadowingOuterLocalVariable
 # rubocop:disable Metrics/DoubleNegation
 # rubocop:disable Metrics/ModuleLength
+# rubocop:disable Metrics/AbcSize
 
 module Enumerable
   def my_each()
@@ -164,6 +165,7 @@ module Enumerable
 
   def my_inject(*argu)
     raise LocalJumpError, 'NO BLOCK OR ARGUMENT GIVEN!' if !block_given? && argu.empty?
+
     converted_array = to_a
     n = converted_array.length
     i = 0
@@ -214,3 +216,4 @@ end
 # rubocop:enable Metrics/ShadowingOuterLocalVariable
 # rubocop:enable Metrics/DoubleNegation
 # rubocop:enable Metrics/ModuleLength
+# rubocop:enable Metrics/AbcSize
