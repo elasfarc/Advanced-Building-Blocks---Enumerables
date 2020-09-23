@@ -4,7 +4,6 @@
 # rubocop:disable Metrics/ShadowingOuterLocalVariable
 # rubocop:disable Metrics/DoubleNegation
 # rubocop:disable Metrics/ModuleLength
-# rubocop:disable Metrics/AbcSize
 
 module Enumerable
   def my_each()
@@ -78,7 +77,7 @@ module Enumerable
       if block_given?
         my_each { |i| return true if yield(i) == true }
       else
-        my_each { |i| return true if i == i }
+        my_each { |i| return true if i }
       end
     else
       raise ArgumentError, 'Too many arguments, Expected 1!' if arg.length > 1
@@ -216,4 +215,3 @@ end
 # rubocop:enable Metrics/ShadowingOuterLocalVariable
 # rubocop:enable Metrics/DoubleNegation
 # rubocop:enable Metrics/ModuleLength
-# rubocop:enable Metrics/AbcSize
