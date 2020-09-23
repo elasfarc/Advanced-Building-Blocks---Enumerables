@@ -49,95 +49,71 @@ module Enumerable
     returned_array
   end
 
-  def my_all?(optional_parameter = nil)
-    converted_array = to_a
-    n = converted_array.length
-    i = 0
-    if optional_parameter
-      puts ' warning: given block not used ' if block_given?
+  def my_all?(*args)
+    if args.empty?
+      if block_given?
+        my_each { |i| return false unless yield(i) }
+      else
+        my_each { |i| return false unless i }
+      end
+    else
+      raise ArgumentError, 'Too many arguments, Expected 1!' if args.length > 1
 
-      dummy_flag = if optional_parameter.is_a?(Regexp)
-                     converted_array.my_all? { |element| !!element[optional_parameter] }
-                   else
-                     converted_array.my_all? { |element| element.is_a?(optional_parameter) }
-                   end
+      puts 'Warning: given block not used' if block_given?
 
-      return false if dummy_flag == false
-
-      return true
-    end
-    if block_given? == false
-      dummy_flag = converted_array.my_all? { |obj| obj }
-      return false if dummy_flag == false
-
-      return true
-    end
-    while i < n
-      returned_flag = yield converted_array[i]
-      return false unless returned_flag
-
-      i += 1
+      if args[0].is_a?(Class)
+        my_each { |i| return false unless i.is_a?(args[0]) }
+      elsif args[0].is_a?(Regexp)
+        my_each { |i| return false unless i.match(args[0]) }
+      else
+        my_each { |i| return false unless i == args[0] }
+      end
     end
     true
   end
 
-  def my_any?(optional_parameter = nil)
-    converted_array = to_a
-    n = converted_array.length
-    i = 0
-    if optional_parameter
-      puts ' warning: given block not used ' if block_given?
+  def my_any?(*arg)
+    if arg.empty?
+      if block_given?
+        my_each { |i| return true if yield(i) == true }
+      else
+        my_each { |i| return true if i == i }
+      end
+    else
+      raise ArgumentError, 'Too many arguments, Expected 1!' if arg.length > 1
 
-      dummy_flag = if optional_parameter.is_a?(Regexp)
-                     converted_array.my_any? { |element| !!element[optional_parameter] }
-                   else
-                     converted_array.my_any? { |element| element.is_a?(optional_parameter) }
-                   end
-      return false if dummy_flag == false
+      puts 'Warning: given block not used' if block_given?
 
-      return true
-    end
-    if block_given? == false
-      dummy_flag = converted_array.my_any? { |obj| !!obj == false }
-      return false if dummy_flag == false
-
-      return true
-    end
-    while i < n
-      returned_flag = yield converted_array[i]
-      return true if returned_flag
-
-      i += 1
+      if arg[0].is_a?(Class)
+        my_each { |i| return true if i.is_a?(arg[0]) }
+      elsif arg[0].is_a?(Regexp)
+        my_each { |i| return true if i.match(arg[0]) }
+      else
+        my_each { |i| return true if i == arg[0] }
+      end
     end
     false
   end
 
-  def my_none?(optional_parameter = nil)
-    converted_array = to_a
-    n = converted_array.length
-    i = 0
-    if optional_parameter
-      puts ' warning: given block not used ' if block_given?
-      dummy_flag = if optional_parameter.is_a?(Regexp)
-                     converted_array.my_none? { |element| !!element[optional_parameter] }
-                   else
-                     converted_array.my_none? { |element| element.is_a?(optional_parameter) }
-                   end
-      return false if dummy_flag == false
-
-      return true
-    end
-    if block_given? == false
-      converted_array.each do |i|
-        return false if !!i == true
+  def my_none?(*arg)
+    if arg.empty?
+      if block_given?
+        my_each { |i| return false if yield(i) == true }
+      else
+        my_each { |i| return false if i == true }
       end
-      return true
-    end
-    while i < n
-      returned_flag = yield converted_array[i]
-      return false if returned_flag
+    else
+      raise ArgumentError, 'Too many arguments, Expected 1!' if arg.length > 1
 
-      i += 1
+      puts 'Warning: given block not used' if block_given?
+
+      if arg[0].is_a?(Class)
+        my_each { |i| return false if i.is_a?(arg[0]) }
+      elsif arg[0].is_a?(Regexp)
+        my_each { |i| return false if i.match(arg[0]) }
+      else
+        my_each { |i| return false if i == arg[0] }
+      end
     end
     true
   end
@@ -187,6 +163,7 @@ module Enumerable
   end
 
   def my_inject(*argu)
+    raise LocalJumpError, 'NO BLOCK OR ARGUMENT GIVEN!' if !block_given? && argu.empty?
     converted_array = to_a
     n = converted_array.length
     i = 0
